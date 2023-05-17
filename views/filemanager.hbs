@@ -1,0 +1,13 @@
+<h2>Tost</h2>
+{{#each files}}
+    <figure class="tile">
+        <div
+        {{#if isDirectory}}class="fileordir dir {{#if empty}}empty{{/if}}"
+        {{else }}class="fileordir file"{{/if}}>
+        </div>
+        <figcaption class="filename">
+            {{name}}
+        </figcaption>
+  
+    </figure>
+{{/each}}

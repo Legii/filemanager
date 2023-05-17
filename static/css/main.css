@@ -1,0 +1,36 @@
+
+.tile {
+    width:200px;
+    height:200px;
+    border-radius: 5%;
+    background-color: #efeeff;
+    padding:10px;
+    box-sizing: border-box;
+  
+}
+
+.fileordir {
+    width:100%;
+    height:calc(100% - 20px);
+    background-color: brown;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+
+.filename {
+    text-align: center;
+    color: red;
+}
+.dir { 
+    background-color: aquamarine;
+}
+.file + .filename {color :chocolate;}
+
+.empty  + .filename{
+    color:blueviolet
+    
+}
