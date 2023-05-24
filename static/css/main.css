@@ -34,3 +34,14 @@
     color:blueviolet
     
 }
+.deletebtn {
+    float:right;
+    background-color: red;
+    width:20px;
+    height:20px;
+    text-align: center;
+    border-radius: 5%;
+    color:white !important;
+    font-weight: bolder;
+    text-decoration: none !important;
+}

@@ -1,9 +1,13 @@
 <h2>Tost</h2>
+<script>
+    const handleDeleteClick = (path) => {
+        alert(path)
+    }
+</script>
 {{#each files}}
     <figure class="tile">
-        <div
-        {{#if isDirectory}}class="fileordir dir {{#if empty}}empty{{/if}}"
-        {{else }}class="fileordir file"{{/if}}>
+        <btn class="deletebtn" onclick="handleDeleteClick('{{{path}}}')">X</btn>
+        <div   {{#if isDirectory}}class="fileordir dir {{#if empty}}empty{{/if}}" {{else }}class="fileordir file"{{/if}}>
         </div>
         <figcaption class="filename">
             {{name}}

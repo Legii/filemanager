@@ -2,7 +2,7 @@ const express = require("express")
 const hbs = require('express-handlebars');
 const path = require("path")
 const fs = require("fs").promises
-
+const fsSync = require("fs")
 const app = express()
 const PORT = 3000;
 app.use(express.static('static'))
@@ -40,6 +40,7 @@ const getFiles = async () => {
             let obj = {
                 isDirectory:isDirectory,
                 name:name,
+                path:p
             }
             if(empty) {obj.empty = true} 
              await list.push(obj)
@@ -53,7 +54,19 @@ const getFiles = async () => {
 }
 
 
-
+const deleteFile = async (filepath) => {
+    console.log(filepath)
+    try {
+        if(fsSync.existsSync(filepath))
+        {
+                await fs.rm(filepath,{recursive: true, force: true})
+            
+    }   }
+    catch {
+        console.log("E")
+    }
+    
+}
 
 
 
@@ -64,7 +77,11 @@ app.listen(PORT, function () {
 
 app.get("/", async function (req, res) {
     files = await getFiles()
-    console.log(files)
+ 
     const context = {files: files }
     res.render('filemanager.hbs',context); 
+})
+app.get("/delete", async function (req, res) {
+    deleteFile(req.query.path)
+    res.redirect("/")
 })
