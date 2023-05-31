@@ -38,11 +38,12 @@ const getFiles = async () => {
              const isDirectory = stat.isDirectory()
              const name = data[i]
              const empty=  isDirectory ? await isEmptyDir(p) : false
-             console.log(empty)
+            const ext = path.extname(p)
             let obj = {
                 isDirectory:isDirectory,
                 name:name,
                 path:p,
+                ext:ext.replace(".",""),
                 safePath:encodeURI(p)
             }
             console.log(JSON.stringify(obj))
