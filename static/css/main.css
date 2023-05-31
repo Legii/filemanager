@@ -1,5 +1,5 @@
-
-.tile {
+@import url("../../node_modules/css-file-icons/build/css-file-icons.css");
+.filetile {
     width:200px;
     height:200px;
     border-radius: 5%;

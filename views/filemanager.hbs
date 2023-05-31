@@ -1,6 +1,22 @@
 <h2>Tost</h2>
-<script>
 
+<script>
+function showFileCreateDialog() {
+    const dialog = document.getElementById('fileCreateDialog')
+    dialog.showModal()
+ }
+ function closeFileCreateDialog() {
+     const dialog = document.getElementById('fileCreateDialog') 
+     dialog.close()
+ }
+ function showDirCreateDialog() {
+    const dialog = document.getElementById('dirCreateDialog')
+    dialog.showModal()
+ }
+ function closeDirCreateDialog() {
+     const dialog = document.getElementById('dirCreateDialog') 
+     dialog.close()
+ }
 </script>
 <div class="container-fluid ">
     <div class="row">
@@ -9,10 +25,41 @@
 <input class="form-control" type="file" required multiple name="imagetoupload">  
 <button class="btn btn-info" type="submit">Upload</button>
 </form>
+<dialog id="fileCreateDialog">
+  <form method="GET" action="/addFile">
+    <input type="text"  name="path" required class="form-control">
+    <button  type="submit" autofocus>ok</button>
+    <button type="button"  onclick="closeFileCreateDialog()" autofocus>close</button>
+
+  </form>
+</dialog>
+
+<dialog id="dirCreateDialog">
+  <form method="GET" action="/addDir">
+    <input type="text"  name="path" required class="form-control">
+    <button  type="submit" autofocus>ok</button>
+    <button type="button"  onclick="closeFileCreateDialog()" autofocus>close</button>
+
+  </form>
+</dialog>
+<button class="btn btn-info" 
+ onclick="showFileCreateDialog()"
+>Utwórz Plik</button>
+
+<button class="btn btn-info" 
+ onclick="showDirCreateDialog()"
+>Utwórz Katalog</button>
+<div class="fi fi-doc">
+    <div class="fi-content">doc</div>
+</div>
 </aside>
+
 <div class="col-9 column  bg-dark" style="display:grid; grid-template-colums: 1fr 1fr 1fr 1fr">
+  
+
+<div style="display:grid; grid-template-columns:1fr 1fr 1fr 1fr 1fr 1fr">
 {{#each files}}
-    <figure class="tile">
+    <figure class="filetile">
         <btn class="deletebtn" onclick="(function() {
             let x =  confirm('usunąć?')
             if(x) {
@@ -29,6 +76,9 @@
     </figure>
 {{/each}}
 </div>
+
+
+
     </div>
    
 </div>

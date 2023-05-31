@@ -6,6 +6,7 @@ const fs = require("fs").promises
 const fsSync = require("fs")
 const app = express()
 const PORT = 3000;
+
 app.use(express.static('static'))
 app.set('views', path.join(__dirname, 'views'));         // ustalamy katalog views
 app.engine('hbs', hbs({ defaultLayout: 'main.hbs' }));   // domyślny layout, potem można go zmienić
@@ -81,7 +82,6 @@ app.listen(PORT, function () {
 
 app.get("/", async function (req, res) {
     files = await getFiles()
- 
     const context = {files: files }
     res.render('filemanager.hbs',context); 
 })
@@ -89,19 +89,38 @@ app.get("/delete", async function (req, res) {
     deleteFile(req.query.path)
     res.redirect("/")
 })
+app.get('/addFile',function(req,res)
+{
+    filepath = Path(req.query.path)
+    fsSync.writeFile(filepath, "a",  (err)=> {
+        if (err) throw err
+        console.log("plik nadpisany");
+    })
+    res.redirect("/")
+})
+
+app.get('/addDir',function(req,res)
+{
+    filepath = Path(req.query.path)
+    fsSync.mkdir(filepath,  (err)=> {
+        if (err) console.log(err)
+        console.log("plik nadpisany");
+    })
+    res.redirect("/")
+})
+
+
+
 app.post('/handleUpload', function (req, res) {
-
     let form = formidable({});
-
     form.uploadDir = root  
     form.on('file', function(field, file) {
-        //rename the incoming file to the file's name
             fs.rename(file.path, path.join(form.uploadDir, file.name));
-    });  // folder do zapisu zdjęcia
+    }); 
 
     form.parse(req, function (err, fields, files) {
  
- res.redirect("/")
+    res.redirect("/")
         
     });
 });
