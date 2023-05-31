@@ -1,4 +1,5 @@
 const express = require("express")
+const formidable = require('formidable');
 const hbs = require('express-handlebars');
 const path = require("path")
 const fs = require("fs").promises
@@ -40,8 +41,10 @@ const getFiles = async () => {
             let obj = {
                 isDirectory:isDirectory,
                 name:name,
-                path:p
+                path:p,
+                safePath:encodeURI(p)
             }
+            console.log(JSON.stringify(obj))
             if(empty) {obj.empty = true} 
              await list.push(obj)
          }
@@ -55,6 +58,7 @@ const getFiles = async () => {
 
 
 const deleteFile = async (filepath) => {
+    filepath = decodeURI(filepath)
     console.log(filepath)
     try {
         if(fsSync.existsSync(filepath))
@@ -85,3 +89,19 @@ app.get("/delete", async function (req, res) {
     deleteFile(req.query.path)
     res.redirect("/")
 })
+app.post('/handleUpload', function (req, res) {
+
+    let form = formidable({});
+
+    form.uploadDir = root  
+    form.on('file', function(field, file) {
+        //rename the incoming file to the file's name
+            fs.rename(file.path, path.join(form.uploadDir, file.name));
+    });  // folder do zapisu zdjęcia
+
+    form.parse(req, function (err, fields, files) {
+ 
+ res.redirect("/")
+        
+    });
+});

@@ -1,12 +1,25 @@
 <h2>Tost</h2>
 <script>
-    const handleDeleteClick = (path) => {
-        alert(path)
-    }
+
 </script>
+<div class="container-fluid ">
+    <div class="row">
+         <aside class="col-3 colmun" style="  background-color:red">
+<form  class="form" enctype="multipart/form-data" method="POST" action="/handleUpload">
+<input class="form-control" type="file" required multiple name="imagetoupload">  
+<button class="btn btn-info" type="submit">Upload</button>
+</form>
+</aside>
+<div class="col-9 column  bg-dark" style="display:grid; grid-template-colums: 1fr 1fr 1fr 1fr">
 {{#each files}}
     <figure class="tile">
-        <btn class="deletebtn" onclick="handleDeleteClick('{{{path}}}')">X</btn>
+        <btn class="deletebtn" onclick="(function() {
+            let x =  confirm('usunąć?')
+            if(x) {
+                window.location.replace('/delete/?path={{safePath}}')
+            }
+            
+            })()">X</btn>
         <div   {{#if isDirectory}}class="fileordir dir {{#if empty}}empty{{/if}}" {{else }}class="fileordir file"{{/if}}>
         </div>
         <figcaption class="filename">
@@ -15,3 +28,9 @@
   
     </figure>
 {{/each}}
+</div>
+    </div>
+   
+</div>
+
+
